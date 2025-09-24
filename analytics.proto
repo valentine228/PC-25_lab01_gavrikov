@@ -1,0 +1,26 @@
+// Сервис для получения информации о потоке событий (клики, просмотры)
+//за период
+
+syntax = "proto3";
+
+package analytics;
+
+// Определение сообщения для диапазона дат
+message DateRange {
+  string start_date = 1; // Начальная дата в формате ГГГГ-ММ-ДД
+  string end_date = 2;   // Конечная дата в формате ГГГГ-ММ-ДД
+}
+
+// Определение сообщения для события
+message Event {
+  string event_type = 1; // Тип события (например, "click", "view")
+  string timestamp = 2;  // Время события в формате ISO 8601 (например, "2023-10-01T12:34:56Z")
+  string user_id = 3;    // Идентификатор пользователя
+  string details = 4;    // Дополнительные детали события
+}
+
+// Определение сервиса Analytics
+service Analytics {
+  // Метод для получения потока событий за заданный период
+  rpc StreamEvents(DateRange) returns (stream Event);
+}
